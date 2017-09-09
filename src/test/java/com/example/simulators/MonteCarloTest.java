@@ -1,8 +1,8 @@
-package com.example.simulation;
+package com.example.simulators;
 
 import static junit.framework.TestCase.assertTrue;
 
-import com.example.simulation.MonteCarlo.MonteCarloResult;
+import com.example.simulators.MonteCarlo.MonteCarloResult;
 import java.io.IOException;
 import org.junit.Test;
 

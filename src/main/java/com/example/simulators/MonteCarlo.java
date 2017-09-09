@@ -1,6 +1,6 @@
-package com.example.simulation;
+package com.example.simulators;
 
-import com.example.simulation.MonteCarlo.MonteCarloResult;
+import com.example.simulators.MonteCarlo.MonteCarloResult;
 import java.util.Arrays;
 import java.util.Random;
 
