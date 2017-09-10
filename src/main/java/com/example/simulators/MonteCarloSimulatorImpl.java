@@ -47,6 +47,25 @@ public class MonteCarloSimulatorImpl implements Simulator<MonteCarloResult> {
     this.sigma = stdDeviation;
     this.inflation = inflation;
     this.percent = percent;
+    validate();
+  }
+
+  // We could use jsr-303 do this. Here is for simplicity
+  private void validate() {
+    StringBuilder sb = new StringBuilder();
+    if (this.years < 0) {
+      sb.append("Years must be positive!\n");
+    }
+    if (trials <= 0) {
+      sb.append("Trials must be positive!\n");
+    }
+    if (percent < 0 || percent > 1) {
+      sb.append("Percent must be between 0.0 and 1.0\n");
+    }
+
+    if (sb.length() > 0) {
+      throw new InvalidSimulationParameterExcetption(sb.toString());
+    }
   }
 
   /**

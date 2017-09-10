@@ -1,6 +1,7 @@
 package com.example.simulators;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.fail;
 
 import com.example.simulators.MonteCarloSimulatorImpl.MonteCarloResult;
 import java.io.IOException;
@@ -19,11 +20,15 @@ public class MonteCarloSimulatorImplTest {
   @Test
   public void testSimulation() throws IOException {
     MonteCarloResult aggressive =
-        new MonteCarloSimulatorImpl(YEARS, N, AGGRESSIVE_RETURN, AGGRESSIVE_RISK, INFLATION, PERCENT).run();
+        new MonteCarloSimulatorImpl(
+                YEARS, N, AGGRESSIVE_RETURN, AGGRESSIVE_RISK, INFLATION, PERCENT)
+            .run();
     System.out.println("Aggressive: " + aggressive);
 
     MonteCarloResult conservative =
-        new MonteCarloSimulatorImpl(YEARS, N, CONSERVATIVE_RETURN, CONSERVATIVE_RISK, INFLATION, PERCENT).run();
+        new MonteCarloSimulatorImpl(
+                YEARS, N, CONSERVATIVE_RETURN, CONSERVATIVE_RISK, INFLATION, PERCENT)
+            .run();
     System.out.println("Conservative: " + conservative);
 
     assertTrue(
@@ -35,5 +40,48 @@ public class MonteCarloSimulatorImplTest {
     assertTrue(
         "Aggressive %10 worst case should less than Conservative",
         aggressive.getWorst() < conservative.getWorst());
+  }
+
+  @Test
+  public void testNoNegativeYears() {
+    try {
+      new MonteCarloSimulatorImpl(-10, N, AGGRESSIVE_RETURN, AGGRESSIVE_RISK, INFLATION, PERCENT);
+      fail("Failed to catch negative Years!");
+    } catch (InvalidSimulationParameterExcetption e) {
+      assertTrue(e.getMessage().contains("Years"));
+    }
+  }
+
+  @Test
+  public void testNoNegativeTrials() {
+    try {
+      new MonteCarloSimulatorImpl(
+          YEARS, -N, AGGRESSIVE_RETURN, AGGRESSIVE_RISK, INFLATION, PERCENT);
+      fail("Failed to catch negative Trials!");
+    } catch (InvalidSimulationParameterExcetption e) {
+      assertTrue(e.getMessage().contains("Trials"));
+    }
+  }
+
+  @Test
+  public void testNoNegativePercentage() {
+    try {
+      new MonteCarloSimulatorImpl(
+          YEARS, N, AGGRESSIVE_RETURN, AGGRESSIVE_RISK, INFLATION, -PERCENT);
+      fail("Failed to catch negative Percentage!");
+    } catch (InvalidSimulationParameterExcetption e) {
+      assertTrue(e.getMessage().contains("Percent"));
+    }
+  }
+
+  @Test
+  public void testGreaterThanHundredPercentage() {
+    try {
+      new MonteCarloSimulatorImpl(
+          YEARS, N, AGGRESSIVE_RETURN, AGGRESSIVE_RISK, INFLATION, 1 + PERCENT);
+      fail("Failed to catch Percentage greater than 1!");
+    } catch (InvalidSimulationParameterExcetption e) {
+      assertTrue(e.getMessage().contains("Percent"));
+    }
   }
 }
