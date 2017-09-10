@@ -1,5 +1,5 @@
 package com.example.simulators;
 
-public interface ISimulator<T> {
+public interface Simulator<T> {
   T run();
 }

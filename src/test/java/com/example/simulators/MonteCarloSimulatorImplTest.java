@@ -2,11 +2,11 @@ package com.example.simulators;
 
 import static junit.framework.TestCase.assertTrue;
 
-import com.example.simulators.MonteCarlo.MonteCarloResult;
+import com.example.simulators.MonteCarloSimulatorImpl.MonteCarloResult;
 import java.io.IOException;
 import org.junit.Test;
 
-public class MonteCarloTest {
+public class MonteCarloSimulatorImplTest {
   private static final double INFLATION = 0.035;
   private static final int N = 100000; // total trials
   private static final int YEARS = 20; // total years
@@ -19,11 +19,11 @@ public class MonteCarloTest {
   @Test
   public void testSimulation() throws IOException {
     MonteCarloResult aggressive =
-        new MonteCarlo(YEARS, N, AGGRESSIVE_RETURN, AGGRESSIVE_RISK, INFLATION, PERCENT).run();
+        new MonteCarloSimulatorImpl(YEARS, N, AGGRESSIVE_RETURN, AGGRESSIVE_RISK, INFLATION, PERCENT).run();
     System.out.println("Aggressive: " + aggressive);
 
     MonteCarloResult conservative =
-        new MonteCarlo(YEARS, N, CONSERVATIVE_RETURN, CONSERVATIVE_RISK, INFLATION, PERCENT).run();
+        new MonteCarloSimulatorImpl(YEARS, N, CONSERVATIVE_RETURN, CONSERVATIVE_RISK, INFLATION, PERCENT).run();
     System.out.println("Conservative: " + conservative);
 
     assertTrue(

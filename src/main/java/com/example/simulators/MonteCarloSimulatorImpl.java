@@ -1,6 +1,6 @@
 package com.example.simulators;
 
-import com.example.simulators.MonteCarlo.MonteCarloResult;
+import com.example.simulators.MonteCarloSimulatorImpl.MonteCarloResult;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -18,7 +18,7 @@ import java.util.Random;
  * <p>The return rate is a Gaussian distribution, with given Mean of return, and Standard deviation
  * (Risk).
  */
-public class MonteCarlo implements ISimulator<MonteCarloResult> {
+public class MonteCarloSimulatorImpl implements Simulator<MonteCarloResult> {
 
   private final double percent;
   private final int years;
@@ -39,7 +39,7 @@ public class MonteCarlo implements ISimulator<MonteCarloResult> {
    * @param percent the percentile value to return. e.g., if percent=10%, then return the 10%th and
    *     90%th value.
    */
-  public MonteCarlo(
+  public MonteCarloSimulatorImpl(
       int years, int trials, double rate, double stdDeviation, double inflation, double percent) {
     this.years = years;
     this.trials = trials;
